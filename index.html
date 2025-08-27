@@ -262,11 +262,14 @@
       </div>
 
 
-      <div class="md:order-2 order-1 md:col-span-3 col-span-12 p-6 card bg-base-100 shadow-sm h-auto">
+      <div class="md:order-2 order-1 md:col-span-3 col-span-12 p-4 card bg-base-100 shadow-sm h-auto">
         <div class="flex items-center justify-between">
           <p class="font-medium text-xl"><i class="fa-regular fa-clock"></i> Call History</p>
-          <button class="btn text-white bg-[#00A63E] border-0 px-6 font-semibold text-lg rounded-3xl">Clear</button>
+          <button id="clear-button" class="btn text-white bg-[#00A63E] border-0 px-6 font-semibold text-lg rounded-3xl">Clear</button>
         </div>
+        
+
+        <div id="call-history-container"></div>
       </div>
     </section>
   </main>

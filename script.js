@@ -1,3 +1,5 @@
+const callHistoryData = [];
+
 // heart number increasing
 const heartButtons = document.getElementsByClassName('heart-button');
 for (const heartBtn of heartButtons) {
@@ -21,20 +23,27 @@ function getNumber(number) {
 }
 
 // call button function
-function callButton(btnId, title, number){
+function callButton(btnId, title, number) {
   document.getElementById(btnId)
-  .addEventListener('click', function () {
-    let balance = parseInt(document.getElementById('call-balance-coin').innerText);
-    if(balance <= 0){
-      alert('❌ Not enough coins! Need minimum 20 coins to call.');
-      return;
-    }
-    balance -= 20;
-    document.getElementById('call-balance-coin').innerText = balance;
-    let subTitle = getSubtitle(title);
-    let phoneNumber = getNumber(number);
-    alert(`📞 calling ${subTitle} ${phoneNumber}`);
-  })
+    .addEventListener('click', function () {
+      let balance = parseInt(document.getElementById('call-balance-coin').innerText);
+      if (balance <= 0) {
+        alert('❌ Not enough coins! Need minimum 20 coins to call.');
+        return;
+      }
+      balance -= 20;
+      document.getElementById('call-balance-coin').innerText = balance;
+      let subTitle = getSubtitle(title);
+      let phoneNumber = getNumber(number);
+      const data = {
+        title: subTitle,
+        number: phoneNumber,
+        date: new Date().toLocaleTimeString()
+      }
+      callHistoryData.push(data);
+      callHistory(btnId);
+      alert(`📞 calling ${subTitle} ${phoneNumber}`);
+    })
 }
 
 for (let i = 1; i <= 9; i++) {
@@ -42,3 +51,30 @@ for (let i = 1; i <= 9; i++) {
 }
 
 
+// call history function
+function callHistory(clickedId) {
+  const callHistoryContainer = document.getElementById('call-history-container');
+  callHistoryContainer.innerText = '';
+
+  for (const data of callHistoryData) {
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <div class="p-3 mt-3 bg-[#FAFAFA] rounded-md flex items-center justify-between">
+        <div>
+          <h3 class="font-semibold">${data.title}</h3>
+          <p>${data.number}</p>
+        </div>
+        <p class="text-sm">${data.date}</p>
+      </div>
+    `;
+    callHistoryContainer.appendChild(div);
+  }
+}
+
+// clear button function
+document.getElementById('clear-button')
+  .addEventListener('click', function () {
+    const callHistoryContainer = document.getElementById('call-history-container');
+    callHistoryContainer.innerHTML = '';
+    callHistoryData.length = 0;
+  })
