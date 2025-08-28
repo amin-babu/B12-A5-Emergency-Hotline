@@ -1,5 +1,3 @@
-const callHistoryData = [];
-
 // heart number increasing
 const heartButtons = document.getElementsByClassName('heart-button');
 for (const heartBtn of heartButtons) {
@@ -23,6 +21,7 @@ function getNumber(number) {
 }
 
 // call button function
+const callHistoryData = [];
 function callButton(btnId, title, number) {
   document.getElementById(btnId)
     .addEventListener('click', function () {
@@ -78,3 +77,22 @@ document.getElementById('clear-button')
     callHistoryContainer.innerHTML = '';
     callHistoryData.length = 0;
   })
+
+
+// copy button section
+const copyBtns = document.getElementsByClassName('copy-btn');
+const arrayCopyBtns = Array.from(copyBtns);
+
+for (const copyBtn of copyBtns) {
+  copyBtn.addEventListener('click', function () {
+    let copyDemo = parseInt(document.getElementById('copy-demo').innerText);
+    copyDemo++;
+    document.getElementById('copy-demo').innerText = copyDemo;
+
+
+    let copyBtnIndex = arrayCopyBtns.indexOf(copyBtn) + 1;
+    const phoneNumber = getNumber(`phone-number-${copyBtnIndex}`);
+    navigator.clipboard.writeText(phoneNumber);
+    alert(`Number Copied - ` + phoneNumber);
+  })
+}
